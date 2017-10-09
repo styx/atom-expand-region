@@ -41,10 +41,9 @@ class Selector
   @selectFold = (selection) ->
     selectionRange = selection.getBufferRange()
     {editor} = selection
-    {languageMode} = editor
 
     for currentRow in [selectionRange.start.row..0]
-      [startRow, endRow] = languageMode.rowRangeForFoldAtBufferRow(currentRow) ? []
+      [startRow, endRow] = editor.rowRangeForParagraphAtBufferRow(currentRow) ? []
       continue unless startRow?
       continue unless startRow <= selectionRange.start.row and selectionRange.end.row <= endRow
       foldRange = new Range([startRow, 0], [endRow, editor.lineTextForBufferRow(endRow).length])
